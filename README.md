@@ -67,4 +67,4 @@ A character storage and management web application built with Spring Boot that h
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
