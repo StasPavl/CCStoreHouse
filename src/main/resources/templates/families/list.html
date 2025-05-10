@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Families - CC StoreHouse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/">CC StoreHouse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/characters">My Characters</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/families">My Families</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form th:action="@{/logout}" method="post" class="m-0">
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="py-5">
+            <div class="container">
+                <!-- Header -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h1 class="mb-0">My Families</h1>
+                        <p class="text-muted" th:text="'You have ' + ${totalFamilies} + ' families in your collection'"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-md-end align-items-center h-100">
+                            <a href="/characters/new" class="btn btn-primary">
+                                <i class="bi bi-plus-lg me-1"></i> Create Character
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- No Families Message -->
+                <div th:if="${families.empty}" class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-3">
+                            <i class="bi bi-people fs-1 text-muted"></i>
+                        </div>
+                        <h3>No Families Yet</h3>
+                        <p class="text-muted mb-4">You haven't created any characters with family information yet. Add family details to your characters to organize them better.</p>
+                        <a href="/characters/new" class="btn btn-primary">
+                            <i class="bi bi-plus-lg me-1"></i> Create Character
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Families List -->
+                <div th:unless="${families.empty}" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col" th:each="familyEntry : ${families}">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0 text-truncate" th:text="${familyEntry.key}">Family Name</h5>
+                                    <span class="badge bg-primary" th:text="${familyEntry.value} + ' character' + (${familyEntry.value > 1 ? 's' : ''})">3 characters</span>
+                                </div>
+                                <p class="card-text text-muted mb-3">Characters belonging to this family or clan.</p>
+                                <a th:href="@{/families/{name}(name=${familyEntry.key})}" class="btn btn-outline-primary stretched-link">View Family</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>CC StoreHouse</h5>
+                    <p>Your character storage and management solution.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#" class="text-light">Terms</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light">Privacy</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light">Contact</a></li>
+                    </ul>
+                    <p class="mb-0">&copy; 2023 CC StoreHouse. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+</body>
+</html> 

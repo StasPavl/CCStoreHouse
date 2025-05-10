@@ -64,12 +64,7 @@ main {
 }
 
 .card {
-    transition: transform 0.2s ease;
     border-radius: 8px;
-}
-
-.card:hover {
-    transform: translateY(-5px);
 }
 
 .feature-icon {

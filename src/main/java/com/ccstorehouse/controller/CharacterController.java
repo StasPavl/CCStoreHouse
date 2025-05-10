@@ -114,6 +114,18 @@ public class CharacterController {
         }
         return "redirect:/login";
     }
+    
+    @GetMapping("/search/family")
+    public String searchCharactersByFamily(@RequestParam String family, Model model, Principal principal) {
+        User user = getCurrentUser(principal);
+        if (user != null) {
+            List<Character> characters = characterService.searchCharactersByFamily(user, family);
+            model.addAttribute("characters", characters);
+            model.addAttribute("familyQuery", family);
+            return "characters/list";
+        }
+        return "redirect:/login";
+    }
 
     private User getCurrentUser(Principal principal) {
         if (principal != null) {

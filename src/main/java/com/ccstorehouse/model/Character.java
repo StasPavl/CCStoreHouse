@@ -35,6 +35,9 @@ public class Character {
     @Column
     private String gender;
     
+    @Column
+    private String family;
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
@@ -128,6 +131,14 @@ public class Character {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+    
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
     }
 
     public LocalDateTime getCreatedAt() {
