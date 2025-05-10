@@ -103,10 +103,10 @@
                 <!-- Character List -->
                 <div th:unless="${characters.empty}" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     <div class="col" th:each="character : ${characters}">
-                        <div class="card h-100 border-0 shadow-sm">
+                        <div class="card h-100 border-0 shadow-sm" th:classappend="${character.dateOfDeath != null && !character.dateOfDeath.isEmpty()} ? 'bg-danger bg-opacity-10' : ''">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="card-title mb-0 text-truncate" th:text="${character.name}">Character Name</h5>
+                                    <h5 class="card-title mb-2" th:text="${character.firstName + ' ' + character.lastName}">Character Name</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-three-dots"></i>
@@ -118,10 +118,11 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 d-flex flex-wrap">
-                                    <span th:if="${character.age}" class="badge bg-secondary me-2 mb-1" th:text="'Age: ' + ${character.age}">Age: 30</span>
+                                    <span th:if="${character.dateOfDeath != null && !character.dateOfDeath.isEmpty()}" class="badge bg-danger me-2 mb-1" th:text="'Deceased: ' + ${character.dateOfDeath} + (${character.reasonOfDeath != null && !character.reasonOfDeath.isEmpty()} ? ' (' + ${character.reasonOfDeath} + ')' : '')">Deceased: 2020-12-31 (Natural causes)</span>
+                                    <span th:if="${character.dateOfBirth != null && !character.dateOfBirth.isEmpty()}" class="badge bg-secondary me-2 mb-1" th:text="'Born: ' + ${character.dateOfBirth}">Born: 1990-01-01</span>
                                     <span th:if="${character.gender}" class="badge bg-secondary me-2 mb-1" th:text="${character.gender}">Gender</span>
                                     <span th:if="${character.occupation}" class="badge bg-secondary me-2 mb-1" th:text="${character.occupation}">Occupation</span>
-                                    <span th:if="${character.family}" class="badge bg-primary me-2 mb-1" th:text="${character.family}">Family</span>
+                                    <span th:if="${character.family != null}" class="badge bg-primary me-2 mb-1" th:text="${character.family.name}">Family</span>
                                 </div>
                                 <p class="card-text mb-3" th:text="${character.description != null && !character.description.isEmpty() ? character.description : 'No description available.'}">Character description here...</p>
                                 <div class="d-flex justify-content-between align-items-center">

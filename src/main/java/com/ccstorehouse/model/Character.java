@@ -12,7 +12,10 @@ public class Character {
     private Long id;
     
     @Column(nullable = false)
-    private String name;
+    private String firstName;
+    
+    @Column(nullable = false)
+    private String lastName;
     
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -30,13 +33,16 @@ public class Character {
     private String occupation;
     
     @Column
-    private Integer age;
-    
-    @Column
     private String gender;
     
-    @Column
-    private String family;
+    @Column(name = "date_of_birth")
+    private String dateOfBirth;
+    
+    @Column(name = "date_of_death", nullable = true)
+    private String dateOfDeath;
+    
+    @Column(name = "reason_of_death", nullable = true)
+    private String reasonOfDeath;
     
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -47,6 +53,10 @@ public class Character {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    
+    @ManyToOne
+    @JoinColumn(name = "family_id")
+    private Family family;
     
     @PrePersist
     protected void onCreate() {
@@ -69,12 +79,20 @@ public class Character {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getDescription() {
@@ -117,14 +135,6 @@ public class Character {
         this.occupation = occupation;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -132,13 +142,29 @@ public class Character {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    
-    public String getFamily() {
-        return family;
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setFamily(String family) {
-        this.family = family;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getDateOfDeath() {
+        return dateOfDeath;
+    }
+
+    public void setDateOfDeath(String dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
+    }
+
+    public String getReasonOfDeath() {
+        return reasonOfDeath;
+    }
+
+    public void setReasonOfDeath(String reasonOfDeath) {
+        this.reasonOfDeath = reasonOfDeath;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -163,5 +189,13 @@ public class Character {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Family getFamily() {
+        return family;
+    }
+
+    public void setFamily(Family family) {
+        this.family = family;
     }
 } 

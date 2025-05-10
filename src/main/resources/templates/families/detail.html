@@ -65,10 +65,15 @@
                         </h1>
                         <p class="text-muted">Characters belonging to this family/clan/house</p>
                     </div>
-                    <div class="col-md-4 d-flex justify-content-md-end align-items-center">
-                        <a href="/characters/new" class="btn btn-outline-primary">
-                            <i class="bi bi-plus-lg me-1"></i> Add Character
+                    <div class="col-md-4 d-flex justify-content-md-end align-items-center gap-2">
+                        <a th:href="@{/families/{family}/add-character(family=${family})}" class="btn btn-outline-success">
+                            <i class="bi bi-person-plus me-1"></i> Add Existing Character
                         </a>
+                        <form th:action="@{/families/{family}/delete(family=${family})}" method="post" th:onsubmit="return confirm('Are you sure you want to delete this family? All characters will be unassigned.');" style="display:inline;">
+                            <button type="submit" class="btn btn-outline-danger ms-2">
+                                <i class="bi bi-trash"></i> Delete Family
+                            </button>
+                        </form>
                     </div>
                 </div>
                 
@@ -78,7 +83,7 @@
                         <div class="card h-100 border-0 shadow-sm">
                             <div class="card-body p-4">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="card-title mb-0 text-truncate" th:text="${character.name}">Character Name</h5>
+                                    <h5 class="card-title mb-0 text-truncate" th:text="${character.firstName + ' ' + character.lastName}">Character Name</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-outline-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-three-dots"></i>
@@ -90,7 +95,8 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 d-flex flex-wrap">
-                                    <span th:if="${character.age}" class="badge bg-secondary me-2 mb-1" th:text="'Age: ' + ${character.age}">Age: 30</span>
+                                    <span th:if="${character.dateOfDeath != null && !character.dateOfDeath.isEmpty()}" class="badge bg-danger me-2 mb-1" th:text="'Deceased: ' + ${character.dateOfDeath} + (${character.reasonOfDeath != null && !character.reasonOfDeath.isEmpty()} ? ' (' + ${character.reasonOfDeath} + ')' : '')">Deceased: 2020-12-31 (Natural causes)</span>
+                                    <span th:if="${character.dateOfBirth != null && !character.dateOfBirth.isEmpty()}" class="badge bg-secondary me-2 mb-1" th:text="'Born: ' + ${character.dateOfBirth}">Born: 1990-01-01</span>
                                     <span th:if="${character.gender}" class="badge bg-secondary me-2 mb-1" th:text="${character.gender}">Gender</span>
                                     <span th:if="${character.occupation}" class="badge bg-secondary me-2 mb-1" th:text="${character.occupation}">Occupation</span>
                                 </div>

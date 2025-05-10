@@ -67,16 +67,21 @@
                                     <div class="mb-4">
                                         <h5 class="border-bottom pb-2 mb-3">Basic Information</h5>
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Character Name *</label>
-                                            <input type="text" class="form-control" id="name" th:field="*{name}" required>
-                                            <div class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                                            <label for="firstName" class="form-label">First Name *</label>
+                                            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                                            <div class="form-text text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lastName" class="form-label">Last Name *</label>
+                                            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+                                            <div class="form-text text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="age" class="form-label">Age</label>
-                                                    <input type="number" class="form-control" id="age" th:field="*{age}">
+                                                    <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                                    <input type="text" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}" placeholder="e.g. 1990-01-01 or January 1, 1990">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -93,8 +98,9 @@
                                         </div>
                                         
                                         <div class="mb-3">
-                                            <label for="family" class="form-label">Family/Clan</label>
-                                            <input type="text" class="form-control" id="family" th:field="*{family}" placeholder="Character's family, clan, or house">
+                                            <label class="form-label">Family/Clan</label>
+                                            <input type="text" class="form-control" th:value="${character.lastName}" readonly>
+                                            <div class="form-text">Family is assigned automatically based on last name.</div>
                                         </div>
                                     </div>
                                     
@@ -121,6 +127,16 @@
                                             <label for="backgroundStory" class="form-label">Background Story</label>
                                             <textarea class="form-control" id="backgroundStory" th:field="*{backgroundStory}" rows="5" placeholder="Origin story, significant events, relationships, etc."></textarea>
                                         </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="dateOfDeath" class="form-label">Date of Death</label>
+                                        <input type="text" class="form-control" id="dateOfDeath" th:field="*{dateOfDeath}" placeholder="e.g. 2020-12-31 or December 31, 2020 (leave blank if alive)">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="reasonOfDeath" class="form-label">Reason of Death</label>
+                                        <input type="text" class="form-control" id="reasonOfDeath" th:field="*{reasonOfDeath}" placeholder="e.g. Natural causes, Battle wounds, etc. (leave blank if alive)">
                                     </div>
                                     
                                     <div class="d-flex justify-content-between">

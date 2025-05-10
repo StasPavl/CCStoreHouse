@@ -2,6 +2,8 @@ package com.ccstorehouse.controller;
 
 import com.ccstorehouse.model.Character;
 import com.ccstorehouse.model.User;
+import com.ccstorehouse.model.Family;
+import com.ccstorehouse.repository.FamilyRepository;
 import com.ccstorehouse.service.CharacterService;
 import com.ccstorehouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,13 @@ public class CharacterController {
 
     private final CharacterService characterService;
     private final UserService userService;
+    private final FamilyRepository familyRepository;
 
     @Autowired
-    public CharacterController(CharacterService characterService, UserService userService) {
+    public CharacterController(CharacterService characterService, UserService userService, FamilyRepository familyRepository) {
         this.characterService = characterService;
         this.userService = userService;
+        this.familyRepository = familyRepository;
     }
 
     @GetMapping
@@ -40,20 +44,29 @@ public class CharacterController {
     }
 
     @GetMapping("/new")
-    public String newCharacterForm(Model model, Principal principal) {
+    public String newCharacterForm(Model model, Principal principal, @RequestParam(value = "familyId", required = false) Long familyId) {
         User user = getCurrentUser(principal);
         if (user != null) {
-            model.addAttribute("character", new Character());
+            Character character = new Character();
+            if (familyId != null) {
+                Optional<Family> familyOpt = familyRepository.findById(familyId);
+                familyOpt.ifPresent(character::setFamily);
+            }
+            model.addAttribute("character", character);
             return "characters/form";
         }
         return "redirect:/login";
     }
 
     @PostMapping
-    public String saveCharacter(@ModelAttribute Character character, Principal principal, RedirectAttributes redirectAttributes) {
+    public String saveCharacter(@ModelAttribute Character character, Principal principal, @RequestParam(value = "familyId", required = false) Long familyId, RedirectAttributes redirectAttributes) {
         User user = getCurrentUser(principal);
         if (user != null) {
             character.setUser(user);
+            if (familyId != null) {
+                Optional<Family> familyOpt = familyRepository.findById(familyId);
+                familyOpt.ifPresent(character::setFamily);
+            }
             characterService.saveCharacter(character);
             redirectAttributes.addFlashAttribute("successMessage", "Character saved successfully!");
             return "redirect:/characters";

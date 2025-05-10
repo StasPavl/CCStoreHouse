@@ -2,6 +2,7 @@ package com.ccstorehouse.controller;
 
 import com.ccstorehouse.model.User;
 import com.ccstorehouse.service.CharacterService;
+import com.ccstorehouse.service.FamilyService;
 import com.ccstorehouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,11 +18,13 @@ public class DashboardController {
 
     private final UserService userService;
     private final CharacterService characterService;
+    private final FamilyService familyService;
 
     @Autowired
-    public DashboardController(UserService userService, CharacterService characterService) {
+    public DashboardController(UserService userService, CharacterService characterService, FamilyService familyService) {
         this.userService = userService;
         this.characterService = characterService;
+        this.familyService = familyService;
     }
 
     @GetMapping
@@ -31,6 +34,8 @@ public class DashboardController {
             if (user != null) {
                 model.addAttribute("user", user);
                 model.addAttribute("characterCount", characterService.getAllCharactersByUser(user).size());
+                model.addAttribute("families", familyService.getAllFamiliesByUser(user));
+                model.addAttribute("familyCount", familyService.getAllFamiliesByUser(user).size());
                 return "dashboard";
             }
         }

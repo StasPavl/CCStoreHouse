@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Character to Family - CC StoreHouse</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/">CC StoreHouse</a>
+        </div>
+    </nav>
+    <main>
+        <section class="py-5">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col">
+                        <h1>Add Existing Character to Family</h1>
+                        <p class="text-muted">Select a character without a family to add to <strong th:text="${family}">Family</strong>.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form th:action="@{/families/{family}/add-character(family=${family})}" method="post">
+                            <div class="mb-3">
+                                <label for="characterId" class="form-label">Select Character</label>
+                                <select class="form-select" id="characterId" name="characterId" required>
+                                    <option th:each="character : ${unassignedCharacters}" th:value="${character.id}" th:text="${character.firstName + ' ' + character.lastName}">Character Name</option>
+                                    <option th:if="${unassignedCharacters == null or unassignedCharacters.isEmpty()}" disabled>No unassigned characters available</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-person-plus me-1"></i> Add to Family
+                            </button>
+                            <a th:href="@{/families/{family}(family=${family})}" class="btn btn-secondary ms-2">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>CC StoreHouse</h5>
+                    <p>Your character storage and management solution.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#" class="text-light">Terms</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light">Privacy</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light">Contact</a></li>
+                    </ul>
+                    <p class="mb-0">&copy; 2023 CC StoreHouse. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+</body>
+</html> 
