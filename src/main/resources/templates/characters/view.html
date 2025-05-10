@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${character.name} + ' - CC StoreHouse'"></title>
+    <title th:text="${character.firstName + ' ' + character.lastName} + ' - CC StoreHouse'"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link th:href="@{/css/style.css}" rel="stylesheet">
@@ -56,15 +56,15 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/characters">Characters</a></li>
-                                <li class="breadcrumb-item active" aria-current="page" th:text="${character.name}">Character Name</li>
+                                <li class="breadcrumb-item active" aria-current="page" th:text="${character.firstName + ' ' + character.lastName}">Character Name</li>
                             </ol>
                         </nav>
-                        <h1 class="mb-2" th:text="${character.name}">Character Name</h1>
+                        <h1 class="mb-2" th:text="${character.firstName + ' ' + character.lastName}">Character Name</h1>
                         <div class="d-flex align-items-center mb-3">
-                            <span th:if="${character.age}" class="badge bg-secondary me-2" th:text="'Age: ' + ${character.age}">Age: 30</span>
+                            <span th:if="${character.dateOfBirth != null && !character.dateOfBirth.isEmpty()}" class="badge bg-secondary me-2" th:text="'Born: ' + ${character.dateOfBirth}">Born: 1990-01-01</span>
                             <span th:if="${character.gender}" class="badge bg-secondary me-2" th:text="${character.gender}">Gender</span>
                             <span th:if="${character.occupation}" class="badge bg-secondary me-2" th:text="${character.occupation}">Occupation</span>
-                            <span th:if="${character.family}" class="badge bg-primary me-2" th:text="${character.family}">Family</span>
+                            <span th:if="${character.family != null}" class="badge bg-primary me-2" th:text="${character.family.name}">Family</span>
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-md-end align-items-center">
@@ -121,6 +121,23 @@
                                 </p>
                             </div>
                         </div>
+                        
+                        <!-- Death Information Card -->
+                        <div class="card border-0 shadow-sm mb-4" th:if="${(character.dateOfDeath != null && !character.dateOfDeath.isEmpty()) || (character.reasonOfDeath != null && !character.reasonOfDeath.isEmpty())}">
+                            <div class="card-body p-4">
+                                <h5 class="mb-3">Death Information</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-transparent ps-0" th:if="${character.dateOfDeath != null && !character.dateOfDeath.isEmpty()}">
+                                        <span class="fw-medium">Date of Death</span>
+                                        <span class="float-end text-muted" th:text="${character.dateOfDeath}">Dec 31, 2020</span>
+                                    </li>
+                                    <li class="list-group-item bg-transparent ps-0" th:if="${character.reasonOfDeath != null && !character.reasonOfDeath.isEmpty()}">
+                                        <span class="fw-medium">Reason of Death</span>
+                                        <span class="float-end text-muted" th:text="${character.reasonOfDeath}">Natural causes</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="col-lg-4">
@@ -142,11 +159,11 @@
                         </div>
                         
                         <!-- Family Info Card (if available) -->
-                        <div class="card border-0 shadow-sm mb-4" th:if="${character.family != null && !character.family.isEmpty()}">
+                        <div class="card border-0 shadow-sm mb-4" th:if="${character.family != null}">
                             <div class="card-body p-4">
                                 <h5 class="mb-3">Family Information</h5>
-                                <p>This character belongs to the <strong th:text="${character.family}">Family Name</strong> family.</p>
-                                <a th:href="@{/characters/search/family(family=${character.family})}" class="btn btn-outline-primary btn-sm">
+                                <p>This character belongs to the <strong th:text="${character.family.name}">Family Name</strong> family.</p>
+                                <a th:href="@{/characters/search/family(family=${character.family.name})}" class="btn btn-outline-primary btn-sm">
                                     <i class="bi bi-search me-1"></i> Find related characters
                                 </a>
                             </div>
