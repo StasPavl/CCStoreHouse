@@ -1,6 +1,6 @@
-package com.bookkeeper.repository;
+package com.ccstorehouse.repository;
 
-import com.bookkeeper.model.User;
+import com.ccstorehouse.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

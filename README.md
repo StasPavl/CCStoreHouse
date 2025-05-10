@@ -1,15 +1,15 @@
-# Bookkeeper
+# CC StoreHouse
 
-A financial management web application built with Spring Boot that helps users track their finances, manage budgets, and gain insights into their spending habits.
+A character storage and management web application built with Spring Boot that helps writers organize, track, and find their fictional characters.
 
 ## Features
 
-- Track income and expenses
-- Set and manage budgets
+- Create and manage character profiles
+- Store detailed character information
+- Powerful search functionality
 - Secure user authentication
 - Responsive design for all devices
 - Premium subscription options
-- Financial insights and reports
 
 ## Technology Stack
 
@@ -30,13 +30,13 @@ A financial management web application built with Spring Boot that helps users t
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/bookkeeper.git
-   cd bookkeeper
+   git clone https://github.com/StasPavl/CCStoreHouse.git
+   cd CCStoreHouse
    ```
 
 2. Configure the database in `src/main/resources/application.properties`:
    ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/bookkeeper
+   spring.datasource.url=jdbc:postgresql://localhost:5432/ccstorehouse
    spring.datasource.username=your_username
    spring.datasource.password=your_password
    ```
@@ -49,12 +49,12 @@ A financial management web application built with Spring Boot that helps users t
 
 4. Build the project:
    ```bash
-   ./gradlew build
+   mvn clean install
    ```
 
 5. Run the application:
    ```bash
-   ./gradlew bootRun
+   mvn spring-boot:run
    ```
 
 6. Access the application at `http://localhost:8080`

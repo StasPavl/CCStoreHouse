@@ -1,7 +1,7 @@
-package com.bookkeeper.service;
+package com.ccstorehouse.service;
 
-import com.bookkeeper.model.User;
-import com.bookkeeper.repository.UserRepository;
+import com.ccstorehouse.model.User;
+import com.ccstorehouse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,11 +32,6 @@ public class UserService {
 
     public boolean emailExists(String email) {
         return userRepository.existsByEmail(email);
-    }
-    
-    public void updateStreakCount(User user, int streakCount) {
-        user.setStreakCount(streakCount);
-        userRepository.save(user);
     }
     
     public void upgradeToPremium(User user) {

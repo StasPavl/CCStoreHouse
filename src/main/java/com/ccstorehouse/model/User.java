@@ -1,4 +1,4 @@
-package com.bookkeeper.model;
+package com.ccstorehouse.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -28,9 +28,6 @@ public class User {
     
     @Column(name = "is_premium")
     private boolean isPremium = false;
-    
-    @Column(name = "streak_count")
-    private int streakCount = 0;
     
     @PrePersist
     protected void onCreate() {
@@ -93,13 +90,5 @@ public class User {
 
     public void setPremium(boolean premium) {
         isPremium = premium;
-    }
-
-    public int getStreakCount() {
-        return streakCount;
-    }
-
-    public void setStreakCount(int streakCount) {
-        this.streakCount = streakCount;
     }
 } 

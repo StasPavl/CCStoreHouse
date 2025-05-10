@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Bookkeeper</title>
+    <title>Register - CC StoreHouse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="/">Bookkeeper</a>
+            <a class="navbar-brand" href="/">CC StoreHouse</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,29 +38,40 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6">
+                        <!-- Alert for error messages -->
+                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <span th:text="${error}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <!-- Alert for success messages -->
+                        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <span th:text="${success}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        
                         <div class="card border-0 shadow-sm">
                             <div class="card-header bg-primary text-white text-center py-3">
                                 <h4 class="mb-0">Create Your Account</h4>
                             </div>
                             <div class="card-body p-4">
-                                <form th:action="@{/register}" method="post">
+                                <form th:action="@{/register}" method="post" th:object="${user}">
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="firstName" class="form-label">First Name</label>
-                                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="lastName" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
+                                        <input type="email" class="form-control" id="email" th:field="*{email}" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password" required>
+                                        <input type="password" class="form-control" id="password" th:field="*{password}" required>
                                         <div class="form-text text-muted">Password must be at least 8 characters long with letters and numbers.</div>
                                     </div>
                                     <div class="mb-3">
@@ -87,12 +98,12 @@
         </section>
     </main>
 
-    <footer class="bg-dark text-light py-4 mt-auto">
+    <footer class="bg-dark text-light py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>Bookkeeper</h5>
-                    <p>Your personal finance management solution.</p>
+                    <h5>CC StoreHouse</h5>
+                    <p>Your character storage and management solution.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <ul class="list-inline">
@@ -100,7 +111,7 @@
                         <li class="list-inline-item"><a href="#" class="text-light">Privacy</a></li>
                         <li class="list-inline-item"><a href="#" class="text-light">Contact</a></li>
                     </ul>
-                    <p class="mb-0">&copy; 2023 Bookkeeper. All rights reserved.</p>
+                    <p class="mb-0">&copy; 2023 CC StoreHouse. All rights reserved.</p>
                 </div>
             </div>
         </div>
