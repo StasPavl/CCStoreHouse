@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 @Configuration
 public class DatabaseConfig {
@@ -24,17 +22,28 @@ public class DatabaseConfig {
     
     @Bean
     @Primary
-    public DataSource dataSource() throws URISyntaxException {
-        if (!databaseUrl.startsWith("jdbc:")) {
-            // If it's a Heroku/Render style URL (postgres://), convert it to JDBC format
-            URI dbUri = new URI(databaseUrl);
+    public DataSource dataSource() {
+        // Check if we're using the Render specific PostgreSQL URL
+        if (databaseUrl.contains("postgresql://") && !databaseUrl.startsWith("jdbc:")) {
+            // For this specific URL: postgresql://ccstorehouse_db_user:nCQnFWEk6FtyFmJrjrhQQrwF1uXTfMEW@dpg-d0fcd8juibrs73ei8vu0-a/ccstorehouse_db
+            String[] parts = databaseUrl.split("@");
             
-            String username = dbUri.getUserInfo().split(":")[0];
-            String password = dbUri.getUserInfo().split(":")[1];
-            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ":" + dbUri.getPort() + dbUri.getPath();
+            // Extract credentials
+            String credentials = parts[0].replace("postgresql://", "");
+            String[] credentialParts = credentials.split(":");
+            String username = credentialParts[0];
+            String password = credentialParts[1];
+            
+            // Extract host and database
+            String[] hostDbParts = parts[1].split("/");
+            String host = hostDbParts[0];
+            String database = hostDbParts[1];
+            
+            // Construct jdbc URL - use port 5432 by default for PostgreSQL
+            String jdbcUrl = "jdbc:postgresql://" + host + ":5432/" + database;
             
             return DataSourceBuilder.create()
-                    .url(dbUrl)
+                    .url(jdbcUrl)
                     .username(username)
                     .password(password)
                     .build();
